@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="css/chat-styles.css">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, shrink-to-fit=yes">
+</head>
+<body ng-app="chatApp">
+    <div class="container-fluid" ng-controller="ChatCtrl">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-2 col-lg-6 col-lg-offset-2">
+                <div class="panel panel-primary">
+                    <!--Header-->
+                    <div class="panel-heading" style="height: 7vh; line-height: 7vh; padding-left: 10px">
+                        Chat <span class="label label-info">Connecté(e) en tant que "{{ userName }}"</span>
+                    </div>
+
+                    <!--Body-->
+                    <div class="collapse in" style="height: 85vh;">
+                        <div class="nano has-scrollbar">
+                            <div class="nano-content pad-all" tabindex="0" style="right: -17px;" scroll-glue>
+                                <ul class="list-unstyled media-block">
+                                    <li class="mar-btm" ng-repeat="message in messages">
+                                        <div class="media-body pad-hor" ng-class="{ 'speech-right' : message.isMine }">
+                                            <div class="speech">
+                                                <span class="media-heading">{{ message.isMine ? 'Moi' : message.senderName }}</span>
+                                                <p>{{ message.text }}</p>
+                                                <p class="speech-time">
+                                                    <i class="fa fa-clock-o fa-fw"></i>{{ message.date | date:"dd/MM/yyyy HH:mm" }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Footer-->
+                    <div class="panel-footer" style="height: 8vh;">
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <input type="text" ng-model="textToSend" placeholder="Tapez votre message" class="form-control chat-input" ng-keyup="$event.keyCode == 13 && send()">
+                            </div>
+                            <div class="col-xs-3">
+                                <button class="btn btn-primary" type="submit" ng-click="send()" ng-enabled="isReadyToSend">Envoyer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- end container -->
+
+    <script type="text/javascript" src="scripts/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="signalr/hubs"></script>
+    <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/scrollglue.js"></script>
+    <script type="text/javascript" src="scripts/chance.min.js"></script>
+    <script type="text/javascript" src="app/app.js"></script>
+    <script type="text/javascript" src="app/services/chatHubService.js"></script>
+    <script type="text/javascript" src="app/services/randomGeneratorService.js"></script>
+    <script type="text/javascript" src="app/controllers/ChatCtrl.js"></script>
+    
+</body>
+</html>
